@@ -44,7 +44,7 @@ class ContentViewSet(viewsets.ModelViewSet):
         content = self.get_object()
         user = request.user
 
-        # Create or update watch history
+        # watch history
         watch_history, created = WatchHistory.objects.get_or_create(
             user=user,
             content=content
@@ -52,7 +52,7 @@ class ContentViewSet(viewsets.ModelViewSet):
         watch_history.last_watched = timezone.now()
         watch_history.save()
 
-        # Generate secure streaming token
+       
         stream_token = secrets.token_urlsafe(32)
         cache.set(f'stream_token_{user.id}_{content.id}', stream_token, 3600)
 
@@ -135,7 +135,7 @@ class ContentViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-    @method_decorator(cache_page(60 * 5))  # Cache for 5 minutes
+    @method_decorator(cache_page(60 * 5))  
     @action(detail=False, methods=['get'], url_path='recommendations')
     def recommendations(self, request):
         top_content = Content.objects.filter(
@@ -191,7 +191,7 @@ class ContentViewSet(viewsets.ModelViewSet):
                     status=status.HTTP_404_NOT_FOUND
                 )
 
-    @method_decorator(cache_page(60 * 5))  # Cache for 5 minutes
+    @method_decorator(cache_page(60 * 5))  
     @action(detail=False, methods=['get'], url_path='trending')
     def trending(self, request):
         trending = Content.objects.select_related(
@@ -204,7 +204,7 @@ class ContentViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(trending, many=True)
         return Response(serializer.data)
 
-    @method_decorator(cache_page(60 * 30))  # Cache for 30 minutes
+    @method_decorator(cache_page(60 * 30)) 
     @action(detail=True, methods=['get'], url_path='episode-guide')
     def episode_guide(self, request, pk=None):
         content = self.get_object()
