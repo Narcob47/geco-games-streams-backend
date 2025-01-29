@@ -14,6 +14,19 @@ urlpatterns = [
     path('users/login/', UserViewSet.as_view({'post': 'login'}), name='user-login'),
     path('shows/', ContentViewSet.as_view({'get': 'list', 'post': 'create'}), name='content-list-create'),
     path('shows/<int:pk>/', ContentViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='content-detail'),
+    
+    
+    path('content/', ContentViewSet.as_view({'get': 'list', 'post': 'create'}), name='content-list-create'),
+    path('content/<int:pk>/', ContentViewSet.as_view({
+        'get': 'retrieve',
+        'put': 'update',
+        'patch': 'partial_update',
+        'delete': 'destroy'
+    }), name='content-detail'),
+    path('content/<int:pk>/watch/', ContentViewSet.as_view({'get': 'watch'}), name='content-watch'),
+    path('content/continue-watching/', ContentViewSet.as_view({'get': 'continue_watching'}), name='content-continue-watching'),
+    path('content/<int:pk>/like/', ContentViewSet.as_view({'post': 'like'}), name='content-like'),
+    
     # path('episodes/', EpisodeViewSet.as_view({'get': 'list', 'post': 'create'}), name='episode-list-create'),
     # path('episodes/<int:pk>/', EpisodeViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='episode-detail'),
     # path('reviews/', ReviewViewSet.as_view({'get': 'list', 'post': 'create'}), name='review-list-create'),

@@ -18,6 +18,10 @@ class Series(models.Model):
     genres = models.CharField(max_length=50)
     cast = models.CharField(max_length=50)
     seasons = models.PositiveIntegerField(null=True, blank=True)
+    
+    def generate_signed_url(self):
+        # Replace this with your logic to generate a signed URL
+        return f"gs://wach-1/series/V1.mp4/{self.id}"  # Example URL
 
 class Episode(models.Model):
     series = models.ForeignKey(Series, related_name='episodes', on_delete=models.CASCADE)
