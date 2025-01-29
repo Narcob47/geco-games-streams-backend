@@ -56,6 +56,10 @@ CORS_ALLOWED_ORIGINS = [
     'https://geco-games-streams-backend.onrender.com'
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://geco-games-streams-backend.onrender.com"
+]
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
