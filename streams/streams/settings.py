@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Path to your GCS service account key file
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-     os.path.join(BASE_DIR, 'streaming-449208-5221a9a49785.json')
+     os.path.join(BASE_DIR, 'streaming-449208-a827ccb1ac58.json')
  )
 
 # Google Cloud Storage settings
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'apis',
     'shows',
+    'movies',
     
     'storages',
 ]

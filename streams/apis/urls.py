@@ -4,6 +4,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from users.views import UserViewSet, UserProfileViewSet
 from shows.views import ContentViewSet
+from movies.views import MovieViewSet
 
 urlpatterns = [
     path('users/', UserViewSet.as_view({'get': 'list', 'post': 'create'}), name='user-list-create'),
@@ -26,6 +27,9 @@ urlpatterns = [
     path('content/<int:pk>/watch/', ContentViewSet.as_view({'get': 'watch'}), name='content-watch'),
     path('content/continue-watching/', ContentViewSet.as_view({'get': 'continue_watching'}), name='content-continue-watching'),
     path('content/<int:pk>/like/', ContentViewSet.as_view({'post': 'like'}), name='content-like'),
+    
+    path('movies/', MovieViewSet.as_view({'get': 'list', 'post': 'create'}), name='movie-list-create'),
+    path('movies/<int:pk>/', MovieViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='movie-detail'),
     
     # path('episodes/', EpisodeViewSet.as_view({'get': 'list', 'post': 'create'}), name='episode-list-create'),
     # path('episodes/<int:pk>/', EpisodeViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='episode-detail'),
