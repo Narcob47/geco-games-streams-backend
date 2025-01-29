@@ -27,12 +27,12 @@ class ContentViewSet(viewsets.ModelViewSet):
         user = request.user
 
         # Update watch history
-        watch_history, created = WatchHistory.objects.get_or_create(
-            user=user,
-            content=content
-        )
-        watch_history.last_watched = timezone.now()
-        watch_history.save()
+        # watch_history, created = WatchHistory.objects.get_or_create(
+        #     user=user,
+        #     content=content
+        # )
+        # watch_history.last_watched = timezone.now()
+        # watch_history.save()
 
         # Generate a signed URL for streaming
         signed_url = content.generate_signed_url()
@@ -47,9 +47,9 @@ class ContentViewSet(viewsets.ModelViewSet):
             "category": content.category,
             "stream_url": signed_url,  # Use the signed URL
             "duration": content.duration,
-            "watch_progress": watch_history.watched_duration,
-            "is_completed": watch_history.completed,
-            "last_played": watch_history.last_watched,
+            # "watch_progress": watch_history.watched_duration,
+            # "is_completed": watch_history.completed,
+            # "last_played": watch_history.last_watched,
             "reactions": {
                 "likes": content.likes,
                 "dislikes": content.dislikes
@@ -57,20 +57,20 @@ class ContentViewSet(viewsets.ModelViewSet):
             "genres": content.genres
         })
         
-    @action(detail=False, methods=['get'], url_path='continue-watching')
-    def continue_watching(self, request):
-        watch_history = WatchHistory.objects.filter(
-            user=request.user,
-            completed=False
-        ).select_related('content').order_by('-last_watched')[:10]
+    # @action(detail=False, methods=['get'], url_path='continue-watching')
+    # def continue_watching(self, request):
+    #     watch_history = WatchHistory.objects.filter(
+    #         user=request.user,
+    #         completed=False
+    #     ).select_related('content').order_by('-last_watched')[:10]
 
-        return Response([{
-            "content_id": history.content.id,
-            "title": history.content.title,
-            "thumbnail": history.content.thumbnail_url,
-            "progress_percentage": (history.watched_duration / history.content.duration) * 100,
-            "last_watched": history.last_watched
-        } for history in watch_history])
+    #     return Response([{
+    #         "content_id": history.content.id,
+    #         "title": history.content.title,
+    #         "thumbnail": history.content.thumbnail_url,
+    #         "progress_percentage": (history.watched_duration / history.content.duration) * 100,
+    #         "last_watched": history.last_watched
+    #     } for history in watch_history])
         
     @action(detail=True, methods=['post'], url_path='like')
     def like(self, request, pk=None):
