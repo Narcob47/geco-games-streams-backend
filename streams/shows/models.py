@@ -21,7 +21,7 @@ class Series(models.Model):
     
     def generate_signed_url(self):
         # Replace this with your logic to generate a signed URL
-        return f"https://storage.cloud.google.com/wach-1/series/V1.mp4/"  # Example URL
+        return f"https://storage.cloud.google.com/wach-1/series/V1.mp4/{self.id}"  # Example URL
 
 class Episode(models.Model):
     series = models.ForeignKey(Series, related_name='episodes', on_delete=models.CASCADE)
