@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-17q(99281&@#2jjx_!=&pf-kiuk%-u4(et61%w)7&ke7+4zgsf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['exp://192.168.1.122:8081', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['exp://192.168.1.122:8081', 'localhost', '127.0.0.1', 'https://geco-games-streams-backend.onrender.com']
 
 
 # Application definition
@@ -53,6 +53,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'http://192.168.1.122:8081',
+    'https://geco-games-streams-backend.onrender.com'
 ]
 
 REST_FRAMEWORK = {
