@@ -19,7 +19,7 @@ class Movie(models.Model):
     movie_upload = models.FileField(upload_to='movies/', storage=gcs_storage, null=True, blank=True)
     image = models.ImageField(upload_to='movies/images/', null=True, blank=True)
 
-    def generate_signed_url(self, expiration_time=3600):
+    def generate_signed_url(self, expiration_time=36000):
         client = storage.Client(credentials=settings.GS_CREDENTIALS, project=settings.GS_PROJECT_ID)
         bucket = client.bucket(settings.GS_BUCKET_NAME)
         blob = bucket.blob(f'movies/{self.movie_upload.name}')
@@ -27,7 +27,7 @@ class Movie(models.Model):
         signed_url = blob.generate_signed_url(expiration=expiration_time)
         return signed_url
 
-    def generate_upload_signed_url(self, expiration_time=3600):
+    def generate_upload_signed_url(self, expiration_time=36000):
         client = storage.Client(credentials=settings.GS_CREDENTIALS, project=settings.GS_PROJECT_ID)
         bucket = client.bucket(settings.GS_BUCKET_NAME)
         blob = bucket.blob(f'movies/{self.movie_upload.name}')
