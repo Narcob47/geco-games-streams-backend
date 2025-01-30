@@ -29,7 +29,7 @@ urlpatterns = [
     path('content/<int:pk>/like/', ContentViewSet.as_view({'post': 'like'}), name='content-like'),
     
     path('movies/', MovieViewSet.as_view({'get': 'list', 'post': 'create'}), name='movie-list-create'),
-    path('movies/<int:pk>/', MovieViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='movie-detail'),
+    path('movies/<int:pk>/watch/', MovieViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='movie-detail'),
     
     # path('episodes/', EpisodeViewSet.as_view({'get': 'list', 'post': 'create'}), name='episode-list-create'),
     # path('episodes/<int:pk>/', EpisodeViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='episode-detail'),
