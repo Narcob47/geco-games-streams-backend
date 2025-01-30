@@ -16,6 +16,7 @@ class Series(models.Model):
     genres = models.CharField(max_length=50)
     cast = models.CharField(max_length=50)
     seasons = models.PositiveIntegerField(null=True, blank=True)
+    duration = models.CharField(max_length=20)
     likes = models.PositiveIntegerField(default=0)
     dislikes = models.PositiveIntegerField(default=0)
 
