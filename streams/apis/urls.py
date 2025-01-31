@@ -17,7 +17,6 @@ urlpatterns = [
     path('series/', SeriesViewSet.as_view({'get': 'list', 'post': 'create'}), name='content-list-create'),
     path('series/<int:pk>/', SeriesViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update','delete': 'destroy'}), name='content-detail'),
     path('series/<int:pk>/watch/', SeriesViewSet.as_view({'get': 'play'}), name='content-watch'),
-    path('series/continue-watching/', SeriesViewSet.as_view({'get': 'continue_watching'}), name='content-continue-watching'),
     path('series/<int:pk>/like/', SeriesViewSet.as_view({'post': 'like'}), name='content-like'),
     path('episodes/', EpisodeViewSet.as_view({'get': 'list', 'post': 'create'}), name='episode-list-create'),
     path('episodes/<int:pk>/', EpisodeViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='episode-detail'),

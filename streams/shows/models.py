@@ -53,7 +53,7 @@ class Episode(models.Model):
         return f'{self.title} (Episode {self.episode_number})'
 
 class ContinueWatching(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     last_watched = models.DateTimeField(auto_now=True)
     progress = models.FloatField(default=0.0)  # Progress in percentage
@@ -62,7 +62,7 @@ class ContinueWatching(models.Model):
         return f'{self.user.username} - {self.episode.title}'
 
 class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -70,7 +70,7 @@ class Like(models.Model):
         return f'{self.user.username} liked {self.episode.title}'
 
 class Dislike(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
