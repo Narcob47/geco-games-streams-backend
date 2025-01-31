@@ -3,7 +3,7 @@ from users.views import UserViewSet, UserProfileViewSet
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from users.views import UserViewSet, UserProfileViewSet
-from shows.views import ContentViewSet
+from shows.views import SeriesViewSet, EpisodeViewSet
 from movies.views import MovieViewSet
 
 urlpatterns = [
@@ -13,27 +13,19 @@ urlpatterns = [
     path('user-profiles/<int:pk>/', UserProfileViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='userprofile-detail'),
     path('register/', UserViewSet.as_view({'post': 'create'}), name='user-register'),
     path('users/login/', UserViewSet.as_view({'post': 'login'}), name='user-login'),
-    path('shows/', ContentViewSet.as_view({'get': 'list', 'post': 'create'}), name='content-list-create'),
-    path('shows/<int:pk>/', ContentViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='content-detail'),
     
-    
-    path('content/', ContentViewSet.as_view({'get': 'list', 'post': 'create'}), name='content-list-create'),
-    path('content/<int:pk>/', ContentViewSet.as_view({
-        'get': 'retrieve',
-        'put': 'update',
-        'patch': 'partial_update',
-        'delete': 'destroy'
-    }), name='content-detail'),
-    path('content/<int:pk>/watch/', ContentViewSet.as_view({'get': 'watch'}), name='content-watch'),
-    path('content/continue-watching/', ContentViewSet.as_view({'get': 'continue_watching'}), name='content-continue-watching'),
-    path('content/<int:pk>/like/', ContentViewSet.as_view({'post': 'like'}), name='content-like'),
+    path('series/', SeriesViewSet.as_view({'get': 'list', 'post': 'create'}), name='content-list-create'),
+    path('series/<int:pk>/', SeriesViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update','delete': 'destroy'}), name='content-detail'),
+    path('series/<int:pk>/watch/', SeriesViewSet.as_view({'get': 'play'}), name='content-watch'),
+    path('series/continue-watching/', SeriesViewSet.as_view({'get': 'continue_watching'}), name='content-continue-watching'),
+    path('series/<int:pk>/like/', SeriesViewSet.as_view({'post': 'like'}), name='content-like'),
+    path('episodes/', EpisodeViewSet.as_view({'get': 'list', 'post': 'create'}), name='episode-list-create'),
+    path('episodes/<int:pk>/', EpisodeViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='episode-detail'),
+    path('episodes/<int:pk>/play/', EpisodeViewSet.as_view({'get': 'play'}), name='episode-play'),
+    path('episodes/<int:pk>/continue-watching/', EpisodeViewSet.as_view({'post': 'continue_watching'}), name='episode-continue-watching'),
+    path('episodes/<int:pk>/like/', EpisodeViewSet.as_view({'post': 'like'}), name='episode-like'),
+    path('episodes/<int:pk>/dislike/', EpisodeViewSet.as_view({'post': 'dislike'}), name='episode-dislike'),
     
     path('movies/', MovieViewSet.as_view({'get': 'list', 'post': 'create'}), name='movie-list-create'),
     path('movies/<int:pk>/watch/', MovieViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='movie-detail'),
-    
-    # path('episodes/', EpisodeViewSet.as_view({'get': 'list', 'post': 'create'}), name='episode-list-create'),
-    # path('episodes/<int:pk>/', EpisodeViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='episode-detail'),
-    # path('reviews/', ReviewViewSet.as_view({'get': 'list', 'post': 'create'}), name='review-list-create'),
-    # path('reviews/<int:pk>/', ReviewViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='review-detail'),
-    # path('analytics/', AnalyticsViewSet.as_view({'get': 'list'}), name='analytics-list'),
 ]

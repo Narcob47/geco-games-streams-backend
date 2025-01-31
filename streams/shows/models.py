@@ -3,12 +3,12 @@ from django.utils import timezone
 from google.cloud import storage
 from django.conf import settings
 from storages.backends.gcloud import GoogleCloudStorage
+from django.contrib.auth.models import User
 
 gcs_storage = GoogleCloudStorage()
 
 class Series(models.Model):
     title = models.CharField(max_length=255)
-    # trailer_url = models.URLField(null=True, blank=True)
     descriptions = models.TextField()
     age_rating = models.CharField(max_length=10)
     category = models.CharField(max_length=50, choices=[("Movie", "Movie"), ("TV Show", "TV Show")])
@@ -26,6 +26,10 @@ class Series(models.Model):
         blob = bucket.blob(f'series/{self.stream_file.name}')
         signed_url = blob.generate_signed_url(expiration=expiration_time)
         return signed_url
+
+    def log_play_event(self):
+        # Log the play event (e.g., save to a database or send to an analytics service)
+        print(f"Video {self.title} is being played at {timezone.now()}")
 
     def __str__(self):
         return self.title
@@ -47,3 +51,28 @@ class Episode(models.Model):
 
     def __str__(self):
         return f'{self.title} (Episode {self.episode_number})'
+
+class ContinueWatching(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
+    last_watched = models.DateTimeField(auto_now=True)
+    progress = models.FloatField(default=0.0)  # Progress in percentage
+
+    def __str__(self):
+        return f'{self.user.username} - {self.episode.title}'
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} liked {self.episode.title}'
+
+class Dislike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} disliked {self.episode.title}'
