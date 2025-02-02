@@ -1,24 +1,30 @@
 from pathlib import Path
 import os
-from google.oauth2 import service_account
+# from google.oauth2 import service_account
+from storages.backends.azure_storage import AzureStorage
 from datetime import timedelta
 # from google.cloud import storage
+
+# INSTALLED_APPS += ["storages"]
+azure_storage = AzureStorage()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Path to your GCS service account key file
-GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-     os.path.join(BASE_DIR, 'streaming-449208-a827ccb1ac58.json')
- )
+# GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+#      os.path.join(BASE_DIR, 'streaming-449208-a827ccb1ac58.json')
+#  )
 
-# Google Cloud Storage settings
-DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-GS_BUCKET_NAME = 'wach-1'
-GS_PROJECT_ID = 'streaming-449208'
-GS_BLOB_CHUNK_SIZE = 524288
-DATA_UPLOAD_MAX_MEMORY_SIZE = 26214400
-FILE_UPLOAD_MAX_MEMORY_SIZE = 26214400
+# Azure Stack Storage settings
+
+AZURE_ACCOUNT_NAME = 'geco2studios'
+AZURE_CONTAINER = 'studios'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+
+AZURE_CUSTOM_DOMAIN = f"{AZURE_ACCOUNT_NAME}.blob.core.windows.net"
+MEDIA_URL = f"https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -111,7 +117,7 @@ WSGI_APPLICATION = 'streams.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }

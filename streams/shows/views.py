@@ -14,7 +14,7 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
-from .models import Series, Episode, ContinueWatching, Like, Dislike
+from .models import Series, Episode
 from .serializers import SeriesSerializer, EpisodeSerializer
 
 class SeriesViewSet(viewsets.ModelViewSet):
