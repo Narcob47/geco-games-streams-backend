@@ -19,6 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Azure Stack Storage settings
 
 AZURE_ACCOUNT_NAME = 'geco2studios'
+AZURE_ACCOUNT_KEY = 'a2wdmIrsd7dt2HbyPvV9au9VcnkdJcsjkJp7NEFDrTPr779QRoQdcZtgCTC9aju5OeOuYR1mXKa++ASta2XM6w=='
 AZURE_CONTAINER = 'studios'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
